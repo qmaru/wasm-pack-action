@@ -13,7 +13,7 @@ async function findVersionLatest(): Promise<string> {
     'https://api.github.com/repos/rustwasm/wasm-pack/releases/latest'
   )
   const body = await response.readBody()
-  return Promise.resolve(JSON.parse(body).tag_name || 'v0.9.1')
+  return Promise.resolve(JSON.parse(body).tag_name || 'v0.12.1')
 }
 
 async function findVersion(): Promise<string> {
@@ -64,7 +64,7 @@ async function run(): Promise<void> {
     await io.mv(path.join(extractedFolder, archive, exec), execPath)
     await io.rmRF(path.join(extractedFolder, archive))
     core.info(`Installed wasm-pack to ${execPath} 🎉`)
-  } catch (error) {
+  } catch (error: any) {
     core.setFailed(error.message)
   } finally {
     io.rmRF(tempFolder)

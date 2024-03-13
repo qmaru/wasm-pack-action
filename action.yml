@@ -3,10 +3,10 @@ description: 'Install `wasm-pack` by downloading the executable (much faster tha
 author: 'jetli'
 inputs:
   version:
-    description: 'Optional version of wasm-pack to install (eg. "v0.9.1", "latest")'
+    description: 'Optional version of wasm-pack to install (eg. "v0.12.1", "latest")'
     default: 'latest'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
 branding:
   icon: 'package'
