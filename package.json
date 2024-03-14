@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jetli/wasm-pack-action.git"
+    "url": "git+https://github.com/qmaru/wasm-pack-action.git"
   },
   "keywords": [
     "actions",

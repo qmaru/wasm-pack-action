@@ -1,6 +1,6 @@
 name: 'wasm-pack-action'
 description: 'Install `wasm-pack` by downloading the executable (much faster than `cargo install wasm-pack`, seconds vs minutes).'
-author: 'jetli'
+author: 'qmaru'
 inputs:
   version:
     description: 'Optional version of wasm-pack to install (eg. "v0.12.1", "latest")'
