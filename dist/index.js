@@ -1,121 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 3109:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__nccwpck_require__(2186));
-const io = __importStar(__nccwpck_require__(7436));
-const tc = __importStar(__nccwpck_require__(7784));
-const os = __importStar(__nccwpck_require__(2037));
-const path = __importStar(__nccwpck_require__(1017));
-const client = __importStar(__nccwpck_require__(5538));
-const c = new client.HttpClient('vsts-node-api');
-function findVersionLatest() {
-    return __awaiter(this, void 0, void 0, function* () {
-        core.info('Searching the latest version of wasm-pack ...');
-        const response = yield c.get('https://api.github.com/repos/rustwasm/wasm-pack/releases/latest');
-        const body = yield response.readBody();
-        return Promise.resolve(JSON.parse(body).tag_name || 'v0.12.1');
-    });
-}
-function findVersion() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const version = core.getInput('version');
-        if (version === 'latest' || version === null || version === undefined) {
-            return yield findVersionLatest();
-        }
-        return Promise.resolve(version);
-    });
-}
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const tempFolder = path.join(os.tmpdir(), 'setup-wasm-pack');
-        yield io.mkdirP(tempFolder);
-        try {
-            const version = yield findVersion();
-            core.info(`Installing wasm-pack ${version} ...`);
-            const platform = process.env['PLATFORM'] || process.platform;
-            core.debug(platform);
-            let ext = '';
-            let arch = '';
-            switch (platform) {
-                case 'win32':
-                    ext = '.exe';
-                    arch = 'x86_64-pc-windows-msvc';
-                    break;
-                case 'darwin':
-                    arch = 'x86_64-apple-darwin';
-                    break;
-                case 'linux':
-                    arch = 'x86_64-unknown-linux-musl';
-                    break;
-                default:
-                    core.setFailed(`Unsupported platform: ${platform}`);
-                    return;
-            }
-            const archive = `wasm-pack-${version}-${arch}`;
-            const url = `https://github.com/rustwasm/wasm-pack/releases/download/${version}/${archive}.tar.gz`;
-            core.info(`Downloading wasm-pack from ${url} ...`);
-            const downloadArchive = yield tc.downloadTool(url);
-            core.info(`Extracting wasm-pack to ${tempFolder} ...`);
-            const extractedFolder = yield tc.extractTar(downloadArchive, tempFolder);
-            const execFolder = path.join(os.homedir(), '.cargo', 'bin');
-            yield io.mkdirP(execFolder);
-            const exec = `wasm-pack${ext}`;
-            const execPath = path.join(execFolder, exec);
-            yield io.mv(path.join(extractedFolder, archive, exec), execPath);
-            yield io.rmRF(path.join(extractedFolder, archive));
-            core.info(`Installed wasm-pack to ${execPath} 🎉`);
-        }
-        catch (error) {
-            core.setFailed(error.message);
-        }
-        finally {
-            io.rmRF(tempFolder);
-        }
-    });
-}
-run().then(() => core.info('Done'), err => core.error(err));
-
-
-/***/ }),
-
 /***/ 7351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -31904,6 +31789,121 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ 399:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__nccwpck_require__(2186));
+const io = __importStar(__nccwpck_require__(7436));
+const tc = __importStar(__nccwpck_require__(7784));
+const os = __importStar(__nccwpck_require__(2037));
+const path = __importStar(__nccwpck_require__(1017));
+const client = __importStar(__nccwpck_require__(5538));
+const c = new client.HttpClient('vsts-node-api');
+function findVersionLatest() {
+    return __awaiter(this, void 0, void 0, function* () {
+        core.info('Searching the latest version of wasm-pack ...');
+        const response = yield c.get('https://api.github.com/repos/rustwasm/wasm-pack/releases/latest');
+        const body = yield response.readBody();
+        return Promise.resolve(JSON.parse(body).tag_name || 'v0.12.1');
+    });
+}
+function findVersion() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const version = core.getInput('version');
+        if (version === 'latest' || version === null || version === undefined) {
+            return yield findVersionLatest();
+        }
+        return Promise.resolve(version);
+    });
+}
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const tempFolder = path.join(os.tmpdir(), 'setup-wasm-pack');
+        yield io.mkdirP(tempFolder);
+        try {
+            const version = yield findVersion();
+            core.info(`Installing wasm-pack ${version} ...`);
+            const platform = process.env['PLATFORM'] || process.platform;
+            core.debug(platform);
+            let ext = '';
+            let arch = '';
+            switch (platform) {
+                case 'win32':
+                    ext = '.exe';
+                    arch = 'x86_64-pc-windows-msvc';
+                    break;
+                case 'darwin':
+                    arch = 'x86_64-apple-darwin';
+                    break;
+                case 'linux':
+                    arch = 'x86_64-unknown-linux-musl';
+                    break;
+                default:
+                    core.setFailed(`Unsupported platform: ${platform}`);
+                    return;
+            }
+            const archive = `wasm-pack-${version}-${arch}`;
+            const url = `https://github.com/rustwasm/wasm-pack/releases/download/${version}/${archive}.tar.gz`;
+            core.info(`Downloading wasm-pack from ${url} ...`);
+            const downloadArchive = yield tc.downloadTool(url);
+            core.info(`Extracting wasm-pack to ${tempFolder} ...`);
+            const extractedFolder = yield tc.extractTar(downloadArchive, tempFolder);
+            const execFolder = path.join(os.homedir(), '.cargo', 'bin');
+            yield io.mkdirP(execFolder);
+            const exec = `wasm-pack${ext}`;
+            const execPath = path.join(execFolder, exec);
+            yield io.mv(path.join(extractedFolder, archive, exec), execPath);
+            yield io.rmRF(path.join(extractedFolder, archive));
+            core.info(`Installed wasm-pack to ${execPath} 🎉`);
+        }
+        catch (error) {
+            core.setFailed(error.message);
+        }
+        finally {
+            io.rmRF(tempFolder);
+        }
+    });
+}
+run().then(() => core.info('Done'), err => core.error(err));
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -33811,7 +33811,7 @@ module.exports = parseParams
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(3109);
+/******/ 	var __webpack_exports__ = __nccwpck_require__(399);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()
