@@ -1,4 +1,4 @@
-name: 'wasm-pack-action'
+name: 'wasm-pack-action-next'
 description: 'Install `wasm-pack` by downloading the executable (much faster than `cargo install wasm-pack`, seconds vs minutes).'
 author: 'qmaru'
 inputs:
