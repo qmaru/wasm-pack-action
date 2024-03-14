@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://github.com/jetli/wasm-pack-action/actions">
-  <img alt="wasm-pack-action status" src="https://github.com/jetli/wasm-pack-action/workflows/build-test/badge.svg">
+  <a href="https://github.com/qmaru/wasm-pack-action/actions">
+  <img alt="wasm-pack-action status" src="https://github.com/qmaru/wasm-pack-action/workflows/build-test/badge.svg">
   </a>
 </p>
 
