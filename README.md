@@ -19,9 +19,9 @@ Install `wasm-pack` by downloading the executable (much faster than `cargo insta
 ## Usage
 
 ```yaml
-- uses: qmaru/wasm-pack-action@v0.5.0
+- uses: qmaru/wasm-pack-action@v0.5.1
   with:
-    # Optional version of wasm-pack to install(eg. 'v0.12.1', 'latest')
+    # Optional version of wasm-pack to install(eg. 'v0.13.1', 'latest')
     version: 'latest'
 ```
 

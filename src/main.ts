@@ -13,7 +13,7 @@ async function findVersionLatest(): Promise<string> {
     'https://api.github.com/repos/rustwasm/wasm-pack/releases/latest'
   )
   const body = await response.readBody()
-  return Promise.resolve(JSON.parse(body).tag_name || 'v0.12.1')
+  return Promise.resolve(JSON.parse(body).tag_name || 'v0.13.1')
 }
 
 async function findVersion(): Promise<string> {
