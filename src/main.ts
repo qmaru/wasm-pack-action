@@ -78,7 +78,8 @@ const isDirectExecution =
     ? require.main === module
     : typeof import.meta.url === 'string' &&
       process.argv[1] !== undefined &&
-      path.resolve(fileURLToPath(import.meta.url)) === path.resolve(process.argv[1])
+      path.resolve(fileURLToPath(import.meta.url)) ===
+        path.resolve(process.argv[1])
 
 if (isDirectExecution) {
   run().then(
