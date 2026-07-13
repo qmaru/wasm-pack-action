@@ -73,10 +73,14 @@ export async function run(): Promise<void> {
   }
 }
 
-if (
-  process.argv[1] &&
-  path.resolve(fileURLToPath(import.meta.url)) === path.resolve(process.argv[1])
-) {
+const isDirectExecution =
+  typeof require !== 'undefined'
+    ? require.main === module
+    : typeof import.meta.url === 'string' &&
+      process.argv[1] !== undefined &&
+      path.resolve(fileURLToPath(import.meta.url)) === path.resolve(process.argv[1])
+
+if (isDirectExecution) {
   run().then(
     () => core.info('Done'),
     (err) => core.error(err)

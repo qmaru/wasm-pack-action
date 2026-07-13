@@ -10,7 +10,7 @@
     "format": "oxfmt --write **/*.ts",
     "format-check": "oxfmt --check **/*.ts",
     "lint": "oxlint src",
-    "pack": "esbuild ./src/main.ts --bundle --platform=node --format=esm --target=node24 --outfile=dist/index.js",
+    "pack": "esbuild ./src/main.ts --bundle --platform=node --format=cjs --target=node24 --define:import.meta.url=undefined --outfile=dist/index.cjs",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
     "all": "npm run build && npm run format && npm run lint & npm run pack && npm test"
   },
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^26.1.1",
-    "esbuild": "^0.27.2",
+    "esbuild": "^0.28.1",
     "jest": "^30.4.2",
     "jest-circus": "^30.4.2",
     "js-yaml": "^5.2.1",
