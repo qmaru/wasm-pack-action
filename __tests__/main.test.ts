@@ -1,36 +1,13 @@
-import * as process from 'process'
-import * as cp from 'child_process'
-import * as path from 'path'
-import * as os from 'os'
+import * as process from 'node:process'
+import * as path from 'node:path'
+import * as os from 'node:os'
+import { pathToFileURL } from 'node:url'
 
-// shows how the runner will run a javascript action with env / stdout protocol
-test('test runs with a fixed version v0.13.1', () => {
+test('loads the compiled ESM module and resolves a fixed version', async () => {
   process.env['RUNNER_TEMP'] = os.tmpdir()
-  process.env['INPUT_VERSION'] = 'v0.13.1'
-  const ip = path.join(__dirname, '..', 'lib', 'main.js')
-  const options: cp.ExecSyncOptions = {
-    env: process.env
-  }
-  console.log(cp.execSync(`node ${ip}`, options).toString())
-})
+  process.env['INPUT_VERSION'] = 'v0.15.0'
+  const modulePath = path.join(process.cwd(), 'lib', 'main.js')
+  const { findVersion } = await import(pathToFileURL(modulePath).href)
 
-/*
-test('test runs with the latest version ', () => {
-  process.env['RUNNER_TEMP'] = os.tmpdir()
-  process.env['INPUT_VERSION'] = 'latest'
-  const ip = path.join(__dirname, '..', 'lib', 'main.js')
-  const options: cp.ExecSyncOptions = {
-    env: process.env
-  }
-  console.log(cp.execSync(`node ${ip}`, options).toString())
+  await expect(findVersion()).resolves.toBe('v0.15.0')
 })
-
-test('test runs without version defined', () => {
-  process.env['RUNNER_TEMP'] = os.tmpdir()
-  const ip = path.join(__dirname, '..', 'lib', 'main.js')
-  const options: cp.ExecSyncOptions = {
-    env: process.env
-  }
-  console.log(cp.execSync(`node ${ip}`, options).toString())
-})
-*/

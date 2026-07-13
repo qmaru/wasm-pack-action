@@ -1,22 +1,24 @@
 import * as core from '@actions/core'
 import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
-import * as os from 'os'
-import * as path from 'path'
-import * as client from 'typed-rest-client/HttpClient'
+import * as os from 'node:os'
+import * as path from 'node:path'
+import * as process from 'node:process'
+import { fileURLToPath } from 'node:url'
+import { HttpClient } from '@actions/http-client'
 
-const c: client.HttpClient = new client.HttpClient('vsts-node-api')
+const c = new HttpClient('wasm-pack-action')
 
-async function findVersionLatest(): Promise<string> {
+export async function findVersionLatest(): Promise<string> {
   core.info('Searching the latest version of wasm-pack ...')
   const response = await c.get(
     'https://api.github.com/repos/rustwasm/wasm-pack/releases/latest'
   )
   const body = await response.readBody()
-  return Promise.resolve(JSON.parse(body).tag_name || 'v0.13.1')
+  return Promise.resolve(JSON.parse(body).tag_name || 'v0.15.0')
 }
 
-async function findVersion(): Promise<string> {
+export async function findVersion(): Promise<string> {
   const version: string = core.getInput('version')
   if (version === 'latest' || version === null || version === undefined) {
     return await findVersionLatest()
@@ -24,7 +26,7 @@ async function findVersion(): Promise<string> {
   return Promise.resolve(version)
 }
 
-async function run(): Promise<void> {
+export async function run(): Promise<void> {
   const tempFolder = path.join(os.tmpdir(), 'setup-wasm-pack')
   await io.mkdirP(tempFolder)
 
@@ -71,7 +73,12 @@ async function run(): Promise<void> {
   }
 }
 
-run().then(
-  () => core.info('Done'),
-  err => core.error(err)
-)
+if (
+  process.argv[1] &&
+  path.resolve(fileURLToPath(import.meta.url)) === path.resolve(process.argv[1])
+) {
+  run().then(
+    () => core.info('Done'),
+    (err) => core.error(err)
+  )
+}

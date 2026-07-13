@@ -8,16 +8,16 @@ Install `wasm-pack` by downloading the executable (much faster than `cargo insta
 
 | before | now |
 | :-: | :-: |
-| node16 | node20 |
+| node16 | node24 |
 | eslint | oxlint |
 | @zeit/ncc | @vercel/ncc |
 
 ## Usage
 
 ```yaml
-- uses: qmaru/wasm-pack-action@v0.5.3
+- uses: qmaru/wasm-pack-action@v0.6.0
   with:
-    # Optional version of wasm-pack to install(eg. 'v0.13.1', 'latest')
+    # Optional version of wasm-pack to install(eg. 'vv0.15.0', 'latest')
     version: 'latest'
 ```
 
